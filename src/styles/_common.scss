@@ -1,0 +1,25 @@
+
+
+div p {
+	float: left;
+}
+
+div {
+	// background-color: aquamarine;
+	clear: fix;
+
+	transition: all 1s ease-in-quint;
+
+	// &:hover {
+	// 	background-color: blue !important;
+	// }
+}
+
+
+
+/* TODO:
+ * babel-css-modules ✔
+	 common config
+	 webpack prod config
+	 semantic ui
+*/

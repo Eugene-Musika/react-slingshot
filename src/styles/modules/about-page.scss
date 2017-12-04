@@ -1,0 +1,28 @@
+// @import "about-page-sec";
+// .color {
+// 	color: #FF00A2;
+// }
+
+// .alt-header {
+// 	// color: #FF00A2;
+// 	composes: color;
+// }
+
+@function size ($size) {
+	@return ($size + 2) * 1px;
+}
+
+@mixin hello {
+	$color: #FF00A2;
+
+	color: $color;
+	font-size: size(20);
+}
+
+
+.alt {
+	&-header {
+		@include hello;
+	}
+}
+

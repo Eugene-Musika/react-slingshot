@@ -1,24 +1,39 @@
+$icons-font-path: "~semantic-ui-sass/icons";
+$flags-image-path: "~semantic-ui-sass/images";
+
+// @import "~semantic-ui-sass/semantic-ui";
+@import "~semantic-ui-sass/scss/globals/all";
+
+@import "~semantic-ui-sass/scss/elements/button";
+@import "~semantic-ui-sass/scss/elements/container";
+@import "~semantic-ui-sass/scss/elements/header";
+
+
 /* Variables */
 $vin-blue: #5bb7db;
 $vin-green: #60b044;
-$vin-red: #ff0000;
+$vin-red: #F00;
 
 /* Styles */
 body {
-  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  line-height: 1.4em;
-  color: #4d4d4d;
-  min-width: 230px;
-  max-width: 550px;
-  margin: 0 auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  font-weight: 300;
+	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	line-height: 1.4em;
+	color: #4D4D4D;
+	min-width: 230px;
+	max-width: 550px;
+	margin: 0 auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	font-weight: 300;
 }
 
 td {
 	padding: 12px;
+}
+
+h1 {
+	font-size: 3em;
 }
 
 h2 {
@@ -29,3 +44,5 @@ h2 {
 .loss { color: $vin-red; }
 input.small { width: 46px; }
 td.fuel-savings-label { width: 175px; }
+
+@import "common";
