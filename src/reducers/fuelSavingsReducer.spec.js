@@ -1,6 +1,5 @@
 /* eslint-disable sort-keys */
-import * as ActionTypes from '../constants/actionTypes';
-
+import ActionTypes from '../constants/actionTypes';
 import { getFormattedDateTime } from '../utils/dates';
 import reducer from './fuelSavingsReducer';
 

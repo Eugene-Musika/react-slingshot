@@ -1,7 +1,6 @@
 /* eslint-disable sort-keys */
-import * as types from '../constants/actionTypes';
-
 import { getFormattedDateTime } from '../utils/dates';
+import types from '../constants/actionTypes';
 
 // example of a thunk using the redux-thunk middleware
 export function saveFuelSavings (settings) {

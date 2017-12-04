@@ -1,5 +1,5 @@
 /* eslint-disable sort-keys */
-import * as ActionTypes from '../constants/actionTypes';
+import ActionTypes from '../constants/actionTypes';
 
 import MockDate from 'mockdate';
 import { calculateSavings } from '../utils/fuelSavings';
