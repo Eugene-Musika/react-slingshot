@@ -16,9 +16,8 @@
 		"open:dist": "babel-node tools/distServer.js",
 		"lint": "esw webpack.config.* src tools --color",
 		"lint:watch": "npm run lint -- --watch",
-		"clean-dist": "npm run remove-dist && mkdir dist",
 		"remove-dist": "rimraf ./dist",
-		"prebuild": "npm run clean-dist && npm run lint && npm run test",
+		"prebuild": "npm run remove-dist && npm run lint && npm run test",
 		"build": "babel-node tools/build.js && npm run open:dist",
 		"test": "jest",
 		"test:CI": "babel-node tools/testCi.js",
@@ -26,19 +25,20 @@
 		"test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
 		"test:watch": "jest --watch",
 		"open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
-		"analyze-bundle": "babel-node ./tools/analyzeBundle.js"
+		"analyze:bundle": "babel-node ./tools/analyzeBundle.js",
+    "analyze:src": "babel-node ./tools/analyzeSrc.js && opn ./analyze/index.html"
 	},
 	"author": "Eugene Musika",
 	"license": "MIT",
 	"dependencies": {
 		"babel-plugin-react-css-modules": "^3.3.2",
-		"react": "16.2.0",
-		"react-dom": "16.2.0",
-		"react-redux": "5.0.6",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0",
+		"react-redux": "^5.0.6",
 		"react-router-dom": "^4.2.2",
 		"react-router-redux": "5.0.0-alpha.6",
-		"redux": "3.7.2",
-		"redux-thunk": "2.2.0"
+		"redux": "^3.7.2",
+		"redux-thunk": "^2.2.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

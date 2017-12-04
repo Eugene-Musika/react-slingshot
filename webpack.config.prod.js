@@ -13,21 +13,23 @@ import path from 'path';
 import webpack from 'webpack';
 
 const GLOBALS = {
-				'process.env.NODE_ENV': JSON.stringify('production'),
-				__DEV__: false
+				__DEV__: false,
+				'process.env.NODE_ENV': JSON.stringify('production')
 			},
 			context = path.resolve('./');
 
 export default {
-	devtool: 'source-map', // more info:https://webpack.js.org/guides/production/#source-mapping and https://webpack.js.org/configuration/devtool/
 	context,
-	entry: path.resolve(__dirname, 'src/index'),
 	target: 'web',
+	devtool: 'source-map', // more info:https://webpack.js.org/guides/production/#source-mapping and https://webpack.js.org/configuration/devtool/
+
+	entry: path.resolve(__dirname, 'src/index'),
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/',
 		filename: '[name].[chunkhash].js'
 	},
+
 	plugins: [
 		// For lodash tree shaking
 		// new LodashWebpackPlugin(),  //! need lodash
@@ -79,17 +81,13 @@ export default {
 			debug: false,
 			noInfo: true, // set to false to see a list of every file being bundled.
 			options: { context }
-
-
-
-
 		})
 	],
 
 	resolve: {
-		modules: [path.resolve('src'), 'node_modules'],
 		//// alias: { css: __dirname + '/../' + options.PATHS.dist + '/css' }, // alias for modules paths
-		extensions: ['*', '.js', '.jsx', '.json', '.css', '.scss']
+		extensions: ['*', '.js', '.jsx', '.json', '.css', '.scss'],
+		modules: [path.resolve('src'), 'node_modules']
 	},
 
 	module: {
@@ -126,56 +124,58 @@ export default {
 				name: '[name].[ext]'
 			}
 		}, {
-			test: /\.(jpe?g|png|gif|ico)$/i,
+			test: /\.(jpe?g|png|gif)$/i,
 			loader: 'file-loader',
 			options: { name: '[name].[ext]' }
-
-
+		}, {
+			test: /\.ico$/,
+			loader: 'file-loader',
+			options: { name: '[name].[ext]' }
 		}, {
 			// Separate CSS files
 			test: /\.s?css$/,
 			exclude: path.resolve(__dirname, 'src/styles/modules'),
 			loader: ExtractTextPlugin.extract({
-				use: [
-					{
-						loader: 'css-loader',
-						options: {
-							minimize: true,
-							sourceMap: true
-						}
-					},
-					{
-						loader: 'postcss-loader',
-						options: {sourceMap: true}
-					},
-					{
-						loader: 'sass-loader',
-						options: {
-							includePaths: [path.resolve(__dirname, 'src', 'scss')],
-							sourceMap: true
-						}
+				use: [{
+					loader: 'css-loader',
+					options: {
+						minimize: true,
+						sourceMap: true
 					}
-				]
+				}, {
+					loader: 'postcss-loader',
+					options: { sourceMap: true }
+				}, {
+					loader: 'sass-loader',
+					options: {
+						includePaths: [path.resolve(__dirname, 'src', 'scss')],
+						sourceMap: true
+					}
+				}]
 			})
-
 		}, {
 			// Bundled CSS Modules
 			test: /\.s?css$/,
 			include: path.resolve(__dirname, 'src/styles/modules'),
-			use: [
-				'style-loader',
-				{
-					loader: 'css-loader',
-					options: {
-						minimize: true,
-						modules: true,
-						camelCase: true, // for className styles (not for styleName)
-						localIdentName: '[local]__[hash:base64]'
-					}
-				},
-				'postcss-loader',
-				'sass-loader'
-			]
+			use: [{
+				loader: 'style-loader',
+				options: { hmr: false }
+			}, {
+				loader: 'css-loader',
+				options: {
+					minimize: true,
+					modules: true,
+					camelCase: true, // for className styles (not for styleName)
+					localIdentName: '[local]__[hash:base64]',
+					sourceMap: true
+				}
+			}, {
+				loader: 'postcss-loader',
+				options: { sourceMap: true }
+			}, {
+				loader: 'sass-loader',
+				options: { sourceMap: true }
+			}]
 		}]
 	}
 };
