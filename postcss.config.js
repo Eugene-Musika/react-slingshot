@@ -3,7 +3,6 @@
 //* Potential fix: Use "process.env.NODE_ENV" instead of "env"
 
 module.exports = ({ file, options, env }) => Object.assign({
-	sourceMap: env !== 'production' ? 'inline' : true,
 	plugins: {
 		'postcss-triangle': {}, 	// "triangle: pointing-<up|down|left|right>;"
 															// "width:  [length];"
@@ -44,7 +43,7 @@ module.exports = ({ file, options, env }) => Object.assign({
 		cssnano: env === 'production' ? {} : false,
 
 		// Reporter //TODO: check if it works
-		'postcss-browser-reporter': env !== 'production' ? {} : false  // OR
-		// 'postcss-reporter': env !== 'production' ? {} : false,      // OR
+		'postcss-browser-reporter': env === 'production' ? false : {}  // OR
+		// 'postcss-reporter': env === 'production' ? false : {},      // OR
 	}
 }, options);
