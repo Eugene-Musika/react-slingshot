@@ -49,6 +49,7 @@
 		"babel-plugin-lodash": "^3.3.2",
 		"babel-plugin-transform-react-constant-elements": "^6.23.0",
 		"babel-plugin-transform-react-remove-prop-types": "^0.4.10",
+		"babel-plugin-transform-remove-console": "6.8.5",
 		"babel-polyfill": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-react": "^6.24.1",
@@ -209,6 +210,12 @@
 				"plugins": [
 					"transform-react-constant-elements",
 					"transform-react-remove-prop-types",
+					[
+						"transform-remove-console",
+						{
+							"exclude": ["info"]
+						}
+					],
 					[
 						"react-css-modules",
 						{
