@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 
 import createHistory from 'history/createBrowserHistory';
+import promiseMiddleware from 'redux-promise-middleware';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import rootReducer from '../reducers';
 // 'routerMiddleware': the new way of storing route changes with redux middleware since rrV4.
@@ -12,7 +13,9 @@ export const history = createHistory();
 function configureStoreProd (initialState) {
 	const reactRouterMiddleware = routerMiddleware(history);
 	const middlewares = [
-    // Add other middleware on this line...
+		// Add other middleware on this line...
+
+		promiseMiddleware(),
 
     // thunk middleware can also accept an extra argument to be passed to each thunk action
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
@@ -35,6 +38,8 @@ function configureStoreDev (initialState) {
 		// when you try to mutate your state either inside a dispatch or between dispatches.
 		reduxImmutableStateInvariant(),
 
+		promiseMiddleware(),
+
     // thunk middleware can also accept an extra argument to be passed to each thunk action
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
 		thunk,
@@ -50,7 +55,7 @@ function configureStoreDev (initialState) {
 	if (module.hot) {
     // Enable Webpack hot module replacement for reducers
 		module.hot.accept('../reducers', () => {
-			const nextReducer = require('../reducers').default; // eslint-disable-line global-require
+			const nextReducer = require('../reducers').default;
 
 			store.replaceReducer(nextReducer);
 		});
