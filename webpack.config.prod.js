@@ -66,7 +66,7 @@ export default {
 			// Note that you can add custom options here if you need to handle other custom logic in index.html
 			// To track JavaScript errors via TrackJS, sign up for a free trial at TrackJS.com and enter your token below.
 			trackJSToken: '',
-			sentryConfigUrl: 'https://f3cdfaf8091947879e52752ba426beae@sentry.io/254401'
+			sentryConfigUrl: ''
 		}),
 
 		// For attributes in HTML <script> tags
