@@ -126,7 +126,8 @@
 		"webpack-bundle-analyzer": "^2.9.1",
 		"webpack-dev-middleware": "^1.12.2",
 		"webpack-hot-middleware": "^2.21.0",
-		"webpack-md5-hash": "^0.0.6"
+		"webpack-md5-hash": "^0.0.6",
+		"webpack-pwa-manifest": "3.3.2"
 	},
 	"keywords": [
 		"react",
@@ -464,7 +465,9 @@
 			"no-template-curly-in-string": 2,
 			"no-unmodified-loop-condition": 1,
 			"no-unneeded-ternary": 1,
-			"no-unused-vars": 1,
+			"no-unused-vars": [1, {
+				"argsIgnorePattern": "^_"
+			}],
 			"no-use-before-define": [
 				2,
 				{

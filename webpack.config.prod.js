@@ -8,6 +8,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 //// import LodashWebpackPlugin from 'lodash-webpack-plugin';
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 // import WebpackSpritesmith from 'webpack-spritesmith';
 import path from 'path';
 import webpack from 'webpack';
@@ -23,11 +24,14 @@ export default {
 	target: 'web',
 	devtool: 'source-map', // more info:https://webpack.js.org/guides/production/#source-mapping and https://webpack.js.org/configuration/devtool/
 
-	entry: path.resolve(__dirname, 'src/index'),
+	entry: {
+		index: path.resolve(__dirname, 'src/index'),
+		sw: path.resolve(__dirname, 'src/sw/sw')
+	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/',
-		filename: '[name].[chunkhash].js'
+		filename: 'assets/js/[name].[chunkhash].js'
 	},
 
 	plugins: [
@@ -42,14 +46,15 @@ export default {
 
 		// Generate an external css file with a hash in the filename
 		new ExtractTextPlugin({
-			filename: '[name].[contenthash].css',
+			filename: 'assets/css/[name].[contenthash].css',
 			allChunks: true
 		}),
 
 		// Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
 		new HtmlWebpackPlugin({
 			template: 'src/index.ejs',
-			favicon: 'src/favicon.ico',
+			chunks: ['index'],
+			inject: true,
 			minify: {
 				removeComments: true,
 				collapseWhitespace: true,
@@ -62,7 +67,6 @@ export default {
 				minifyCSS: true,
 				minifyURLs: true
 			},
-			inject: true,
 			// Note that you can add custom options here if you need to handle other custom logic in index.html
 			// To track JavaScript errors via TrackJS, sign up for a free trial at TrackJS.com and enter your token below.
 			trackJSToken: '',
@@ -72,6 +76,10 @@ export default {
 		// For attributes in HTML <script> tags
 		// Info: https://github.com/numical/script-ext-html-webpack-plugin
 		new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
+
+		// Generate manifest and icons
+		// Info: https://github.com/arthurbergmz/webpack-pwa-manifest
+		new WebpackPwaManifest(require('./tools/manifestConfig').default),
 
 		// Minify JS
 		new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),

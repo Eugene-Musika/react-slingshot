@@ -7,6 +7,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 //// import LodashWebpackPlugin from 'lodash-webpack-plugin';
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 // import WebpackSpritesmith from 'webpack-spritesmith';
 import path from 'path';
 import webpack from 'webpack';
@@ -17,16 +18,20 @@ const GLOBALS = {
 			},
 			context = path.resolve('./');
 
+
 export default {
 	context,
 	target: 'web',
 	devtool: 'source-map', // more info:https://webpack.js.org/guides/production/#source-mapping and https://webpack.js.org/configuration/devtool/
 
-	entry: path.resolve(__dirname, 'src/index'),
+	entry: {
+		index: path.resolve(__dirname, 'src/index'),
+		sw: path.resolve(__dirname, 'src/sw/sw')
+	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/',
-		filename: '[name].[chunkhash].js'
+		filename: 'assets/js/[name].[chunkhash].js'
 	},
 
 	plugins: [
@@ -41,20 +46,25 @@ export default {
 
 		// Generate an external css file with a hash in the filename
 		new ExtractTextPlugin({
-			filename: '[name].[contenthash].css',
+			filename: 'assets/css/[name].[contenthash].css',
 			allChunks: true
 		}),
 
 		// Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
 		new HtmlWebpackPlugin({
 			template: 'src/index.ejs',
-			favicon: 'src/favicon.ico',
+			chunks: ['index'],
 			inject: true
 		}),
 
 		// For attributes in HTML <script> tags
 		// Info: https://github.com/numical/script-ext-html-webpack-plugin
 		new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
+
+
+		// Generate manifest and icons
+		// Info: https://github.com/arthurbergmz/webpack-pwa-manifest
+		new WebpackPwaManifest(require('./tools/manifestConfig').default),
 
 		// Global options for loaders and plugins
 		new webpack.LoaderOptionsPlugin({

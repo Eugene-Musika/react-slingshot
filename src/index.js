@@ -6,7 +6,6 @@ import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import Root from './components/Root';
 import { render } from 'react-dom';
-require('./favicon.ico'); // Tell webpack to load favicon.ico
 const store = configureStore();
 
 render(

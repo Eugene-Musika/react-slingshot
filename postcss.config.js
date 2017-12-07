@@ -16,9 +16,6 @@ module.exports = ({ file, options, env }) => Object.assign({
 		'postcss-short': {},			// INFO: http://github.com/jonathantneal/postcss-short
 		'postcss-will-change': {},
 		'postcss-vmin': {},
-		//// 'postcss-font-magician': { //! NOTE: doesn't support Cyrrilic
-		//// 	hosted: '../fonts/'
-		//// },
 		'postcss-cssnext': { //NOTE: CSSnext has autoprefixer
 			browsers: [
 				'> 5%',
@@ -27,15 +24,11 @@ module.exports = ({ file, options, env }) => Object.assign({
 				'ios >= 7'
 			]
 		},
-		'rucksack-css': {},
-		//* 'rucksack-css' includes:
+		'rucksack-css': {}, // INFO: https://www.rucksackcss.org/docs/
+		// package includes:
 		// postcss-alias     =>  "@alias {cl: color; l: left; ...}"
 		// postcss-clearfix  =>  "clear: fix"
 		// postcss-easings   =>  INFO: http://easings.net
-
-		//! FIXME: This plugin does't work
-		// 'postcss-hamster': {},  	// Typography, Vertical Rhythm, Modular Scale
-																// INFO: https://hamster.im
 
 		'postcss-svgo': env === 'production' ? {} : false,
 		'css-mqpacker': env === 'production' ? {} : false,
