@@ -14,7 +14,12 @@ console.log(chalkProcessing('Opening production build...'));
 browserSync({
 	port: 4000,
 	ui: { port: 4001 },
-	server: { baseDir: 'dist' },
+	server: { baseDir: 'dist/juliadates' },
+	serveStatic: [{
+		route: '/assets',
+		dir: 'dist'
+	}],
+	reloadDebounce: 2000,
 
 	files: [
 		'src/*.html'

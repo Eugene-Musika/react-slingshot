@@ -1,7 +1,7 @@
 /* eslint-disable sort-keys */
 // For info about this file refer to webpack and webpack-hot-middleware documentation
 // For info on how we're generating bundles with hashed filenames for cache busting: https://medium.com/@okonetchnikov/long-term-caching-of-static-assets-with-webpack-1ecb139adb95#.w99i89nsz
-// import CopyWebpackPlugin from 'copy-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 //// import LodashWebpackPlugin from 'lodash-webpack-plugin';
@@ -15,18 +15,25 @@ const GLOBALS = {
 				__DEV__: true,
 				'process.env.NODE_ENV': JSON.stringify('stage')
 			},
-			context = path.resolve('./');
+			context = path.resolve('./'),
+			mirrors = {
+				JULIADATES: 'juliadates',
+				EMILYDATES: 'emilydates'
+			};
 
 export default {
 	context,
 	target: 'web',
 	devtool: 'source-map', // more info:https://webpack.js.org/guides/production/#source-mapping and https://webpack.js.org/configuration/devtool/
 
-	entry: path.resolve(__dirname, 'src/index'),
+	entry: {
+		[mirrors.EMILYDATES]: path.resolve(__dirname, `src/www/${ mirrors.EMILYDATES }/index`),
+		[mirrors.JULIADATES]: path.resolve(__dirname, `src/www/${ mirrors.JULIADATES }/index`)
+	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/',
-		filename: '[name].[chunkhash].js'
+		filename: '[name]/index.[chunkhash].js'
 	},
 
 	plugins: [
@@ -41,20 +48,33 @@ export default {
 
 		// Generate an external css file with a hash in the filename
 		new ExtractTextPlugin({
-			filename: '[name].[contenthash].css',
+			filename: '[name]/index.[contenthash].css',
 			allChunks: true
 		}),
 
 		// Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
 		new HtmlWebpackPlugin({
-			template: 'src/index.ejs',
-			favicon: 'src/favicon.ico',
+			filename: `${ mirrors.EMILYDATES }/index.html`,
+			template: `src/www/${ mirrors.EMILYDATES }/index.ejs`,
+			chunks: [mirrors.EMILYDATES],
+			inject: true
+		}),
+		new HtmlWebpackPlugin({
+			filename: `${ mirrors.JULIADATES }/index.html`,
+			template: `src/www/${ mirrors.JULIADATES }/index.ejs`,
+			chunks: [mirrors.JULIADATES],
 			inject: true
 		}),
 
 		// For attributes in HTML <script> tags
 		// Info: https://github.com/numical/script-ext-html-webpack-plugin
 		new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
+
+		// Copy assets from src/assets folder to /dist
+		new CopyWebpackPlugin([{
+			from: path.resolve(__dirname, 'src/assets'),
+			to: path.resolve(__dirname, 'dist/assets')
+		}]),
 
 		// Global options for loaders and plugins
 		new webpack.LoaderOptionsPlugin({

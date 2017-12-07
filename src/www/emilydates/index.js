@@ -1,12 +1,12 @@
-import './styles/styles.scss'; // Yep, that's right. You can import SASS/CSS files too! Webpack will run the associated loader and plug this into the page.
+import '../../styles/styles.scss'; // Yep, that's right. You can import SASS/CSS files too! Webpack will run the associated loader and plug this into the page.
 
-import configureStore, { history } from './store/configureStore';
+import configureStore, { history } from '../../store/configureStore';
 
 import { AppContainer } from 'react-hot-loader';
 import React from 'react';
-import Root from './components/Root';
+import Root from '../../components/Root';
 import { render } from 'react-dom';
-require('./favicon.ico'); // Tell webpack to load favicon.ico
+// require('./favicon.ico'); // Tell webpack to load favicon.ico
 const store = configureStore();
 
 render(
@@ -17,8 +17,8 @@ render(
 );
 
 if (module.hot) {
-	module.hot.accept('./components/Root', () => {
-		const NewRoot = require('./components/Root').default;
+	module.hot.accept('../../components/Root', () => {
+		const NewRoot = require('../../components/Root').default;
 
 		render(
       <AppContainer>
