@@ -293,7 +293,6 @@
 			"node": true,
 			"es6": true,
 			"worker": true,
-			"jquery": true,
 			"mocha": true,
 			"jest": true
 		},

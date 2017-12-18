@@ -1,6 +1,4 @@
 /* eslint-disable sort-keys */
-//* NOTE: Possible issue with "env"
-//* Potential fix: Use "process.env.NODE_ENV" instead of "env"
 
 module.exports = ({ file, options, env }) => Object.assign({
 	plugins: {
